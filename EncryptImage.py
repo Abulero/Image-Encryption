@@ -24,10 +24,12 @@ def Encrypt(image, key):
 
 if __name__ == '__main__':
     # Get image
+    print('Please select the image to be encrypted')
     image_path = easygui.fileopenbox(os.getcwd())
     image = Image.open(image_path)
 
     # Generate key from image
+    print('Generating key...')
     key = Image.new('RGB', image.size)
     for x in range(image.size[0]):
         for y in range(image.size[1]):
@@ -36,17 +38,13 @@ if __name__ == '__main__':
             b = random.randint(0, 255)
 
             key.putpixel((x, y), (r, g, b))
+    print('Done')
 
     # Encrypt image
+    print('Encrypting...')
     encrypted_image = Encrypt(image, key)
 
-    # Showing results
-    image.show()
-    key.show()
-
-    encrypted_image.show()
-
-    # Unveiling the original image
-    original_image = Encrypt(encrypted_image, key)
-
-    original_image.show()
+    # Saving
+    encrypted_image.save('encrypted_image.png')
+    key.save('key.png')
+    print('Done')
